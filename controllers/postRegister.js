@@ -1,8 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const e = require("express");
 
-exports.postRegister = async function (req, res) {
+exports.postRegister = async (req, res) => {
     try {
         const { username, password, email } = req.body;
 
