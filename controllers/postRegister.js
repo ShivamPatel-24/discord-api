@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 exports.postRegister = async (req, res) => {
     try {
@@ -22,7 +23,16 @@ exports.postRegister = async (req, res) => {
         });
 
         // create JWT token
-        const token = "JWT Token";
+        const token = jwt.sign(
+            {
+                email,
+                userId: user._id,
+            },
+            process.env.TOKEN_KEY,
+            {
+                expiresIn: "24h",
+            }
+        );
 
         // sending success response status
         console.log("reaching 201!");

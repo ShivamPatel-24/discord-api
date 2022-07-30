@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require("../controllers/authControllers");
 const Joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
+const auth = require("../middleware/auth");
 
 const registerSchema = Joi.object({
     username: Joi.string().min(3).max(12).required(),
@@ -30,5 +31,10 @@ router.post(
     validator.body(loginSchema),
     authController.controllers.postLogin
 );
+
+// Test route to verify token
+router.get("/test", auth, (req, res) => {
+    res.send("request passed");
+});
 
 module.exports = router;
