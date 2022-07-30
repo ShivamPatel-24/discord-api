@@ -6,19 +6,20 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 
+const authRoutes = require("./routes/authRoutes");
+port = process.env.PORT || 3000;
+
 const app = express();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.DB_URL).then(() => {
+mongoose.connect(process.env.DB_CLOUD_URL).then(() => {
     console.log("DB connection established");
 });
 
+app.use("/api/auth", authRoutes);
 const server = http.createServer(app);
-
-port = process.env.PORT || 3000;
 
 server.listen(port, () => {
     console.log(`Listening on port ${port}`);
