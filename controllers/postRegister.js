@@ -7,7 +7,7 @@ exports.postRegister = async (req, res) => {
         const { username, password, email } = req.body;
 
         // check if email is already registered
-        const userExists = User.exists({ email: email.toLowerCase() });
+        const userExists = await User.findOne({ email: email.toLowerCase() });
         if (userExists) {
             return res.status(409).send("Email already in use.");
         }
